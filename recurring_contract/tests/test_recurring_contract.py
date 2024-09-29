@@ -8,13 +8,13 @@
 #
 ##############################################################################
 import logging
-import random
 import string
 
 from dateutil.relativedelta import relativedelta
 from dateutil.utils import today
 
 from odoo.tests.common import TransactionCase
+import secrets
 
 logger = logging.getLogger(__name__)
 
@@ -61,7 +61,7 @@ class BaseContractTest(TransactionCase):
         )
 
     def ref(self, length):
-        return "".join(random.choice(string.ascii_lowercase) for _ in range(length))
+        return "".join(secrets.choice(string.ascii_lowercase) for _ in range(length))
 
     def create_group(self, vals):
         base_vals = {
