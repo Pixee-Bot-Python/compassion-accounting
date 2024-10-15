@@ -3,10 +3,10 @@
 
 import base64
 import logging
-import xml.etree.ElementTree as ET
 
 from odoo import models
 from odoo.exceptions import UserError
+import defusedxml.ElementTree
 
 _logger = logging.getLogger(__name__)
 
@@ -86,7 +86,7 @@ class EbicsFile(models.Model):
 
     def _on_error_parse_xml_and_cancel(self, err_message):
         _logger.info("Parsing file with err: %s", err_message)
-        root = ET.fromstring(base64.b64decode(self.data))
+        root = defusedxml.ElementTree.fromstring(base64.b64decode(self.data))
         ns = root.tag[1 : root.tag.index("}")]
         _logger.info("PAIN002 ns: %s", ns)
         po_name = root.find(
